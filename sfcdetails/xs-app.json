@@ -1,0 +1,14 @@
+{
+  "welcomeFile": "/sfcdetails/index.html",
+  "authenticationMethod": "none",
+  "logout": {
+    "logoutEndpoint": "/do/logout"
+  },
+  "routes": [
+    {
+      "source": "^/sfcdetails/(.*)$",
+      "target": "$1",
+      "localDir": "webapp"
+    }
+  ]
+}

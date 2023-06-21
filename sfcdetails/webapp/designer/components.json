@@ -1,0 +1,15 @@
+{
+	"components": [
+		{
+			"id": "sfcdetails",
+			"type": "VIEW_PLUGIN",
+			"allowMultipleInstances": true,
+			"name": "sap.custom.plugin.testplugin.sfcdetails.sfcdetails",
+			"propertyEditor": "sap.custom.plugin.testplugin.sfcdetails.sfcdetails.builder.PropertyEditor",
+			"i18n": "sap.custom.plugin.testplugin.sfcdetails.sfcdetails.i18n.i18n",
+            "productionProcessEnabled": false,
+           "productionProcessTitle": "sfcdetails",
+			"supportedPodTypes": ["WORK_CENTER","OPERATION","ORDER","OTHER","MONITOR"]
+		}   
+	]
+}
