@@ -33,9 +33,8 @@ sap.ui.define([
 			return {
 				"backButtonVisible": true,
 				"closeButtonVisible": true,
-                "title": "SFC Details",
-				"text": ""
-                
+                "title": "",
+				"text": ""              
 			};
 		}
 

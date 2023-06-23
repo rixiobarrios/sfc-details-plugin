@@ -29,45 +29,12 @@
             </Toolbar>
         </headerToolbar>
         <content> 
-            <Text id="textPlugin" text="template" class="textFontSize" textAlign="Center" width="100%"/>
-                                <HBox width="100%">
-                        <items>
-                            <Label id="podTypeLabel" text="{i18n>podType}:" class="sapUiTinyMarginEnd"/>
-                            <Label id="podType" text="{/podType}" width="100%" />
-                        </items>
-                    </HBox>
-                    <HBox width="100%">
-                        <items>
-                            <Label id="inputTypeLabel" text="{i18n>inputType}:" class="sapUiTinyMarginEnd"/>
-                            <Label id="inputType" text="{/inputType}" width="100%" />
-                        </items>
-                    </HBox>
-                    <HBox width="100%" visible="{= ${/podType} === 'WORK_CENTER'}">
-                        <items>
-                            <Label id="workCenterLabel" text="{i18n>workCenter}:" class="sapUiTinyMarginEnd"/>
-                            <Label id="workCenter" text="{/workCenter}" width="100%" />
-                        </items>
-                    </HBox>
-                    <HBox width="100%" visible="{= ${/podType} === 'WORK_CENTER'}">
-                        <items>
-                            <Label id="operationLabel" text="{i18n>operation}:" class="sapUiTinyMarginEnd"/>
-                            <Label id="operation" text="{/operation}" width="100%" />
-                        </items>
-                    </HBox>
-                    <HBox width="100%">
-                        <items>
-                            <Label id="resourceLabel" text="{i18n>resource}:" class="sapUiTinyMarginEnd"/>
-                            <Label id="resource" text="{/resource}" width="100%" />
-                        </items>
-                    </HBox>
-                    <HBox width="100%">
-                        <items>
-                            <Label id="selectionCountTypeLabel" text="{i18n>selectionCount}:" class="sapUiTinyMarginEnd"/>
-                            <Label id="selectionCount" text="{/selectionCount}" width="100%" />
-                        </items>
-                    </HBox>
+            <Text text="Order:" class="textFontSize" textAlign="Right" width="100%"/>
+            <Text text="SFC:" class="textFontSize" textAlign="Left" width="100%"/>
+            <Text text="Material:" class="textFontSize" textAlign="Center" width="100%"/>
+            <Text text="BOM:" class="textFontSize" textAlign="End" width="100%"/>
+            <Text text="Routing:" class="textFontSize" textAlign="Begin" width="100%"/>
+            <Text text="Status:" class="textFontSize" textAlign="Initial" width="100%"/>
         </content>
 	    </Panel>		
-        
-  
 </mvc:View>
