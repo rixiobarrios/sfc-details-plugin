@@ -29,11 +29,11 @@
             </Toolbar>
         </headerToolbar>
         <content> 
-            <Text text="Order:" class="textFontSize" textAlign="Right" width="100%"/>
-            <Text text="SFC:" class="textFontSize" textAlign="Left" width="100%"/>
-            <Text text="Material:" class="textFontSize" textAlign="Center" width="100%"/>
-            <Text text="BOM:" class="textFontSize" textAlign="End" width="100%"/>
-            <Text text="Routing:" class="textFontSize" textAlign="Begin" width="100%"/>
+            <Text text="Order:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <Text text="SFC:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <Text text="Material:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <Text text="BOM:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <Text text="Routing:" class="textFontSize" textAlign="Initial" width="100%"/>
             <Text text="Status:" class="textFontSize" textAlign="Initial" width="100%"/>
         </content>
 	    </Panel>		
