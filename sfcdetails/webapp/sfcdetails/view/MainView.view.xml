@@ -28,13 +28,13 @@
                     press="onClosePress"/>
             </Toolbar>
         </headerToolbar>
-        <content> 
-            <Text text="Order:" class="textFontSize" textAlign="Initial" width="100%"/>
-            <Text text="SFC:" class="textFontSize" textAlign="Initial" width="100%"/>
-            <Text text="Material:" class="textFontSize" textAlign="Initial" width="100%"/>
-            <Text text="BOM:" class="textFontSize" textAlign="Initial" width="100%"/>
-            <Text text="Routing:" class="textFontSize" textAlign="Initial" width="100%"/>
-            <Text text="Status:" class="textFontSize" textAlign="Initial" width="100%"/>
+        <content>
+            <Text id="order" text="Order:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <Text id="sfc" text="SFC:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <Text id="material" text="Material:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <Text id="bom" text="BOM:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <Text id="routing" text="Routing:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <Text id="status" text="Status:" class="textFontSize" textAlign="Initial" width="100%"/>
         </content>
 	    </Panel>		
 </mvc:View>

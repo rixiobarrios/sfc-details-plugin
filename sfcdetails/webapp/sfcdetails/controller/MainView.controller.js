@@ -7,30 +7,53 @@ sap.ui.define([
 
 	return PluginViewController.extend("sap.custom.plugin.testplugin.sfcdetails.sfcdetails.controller.MainView", {
 		onInit: function () {
-			PluginViewController.prototype.onInit.apply(this, arguments);
-			
-			           
-            
+			PluginViewController.prototype.onInit.apply(this, arguments);     
 		},
 
-
-
-
         onAfterRendering: function(){
-            
             this.getView().byId("backButton").setVisible(this.getConfiguration().backButtonVisible);
             this.getView().byId("closeButton").setVisible(this.getConfiguration().closeButtonVisible);
-            
             this.getView().byId("headerTitle").setText(this.getConfiguration().title);
             this.getView().byId("textPlugin").setText(this.getConfiguration().text);
-
         },
 
 		onBeforeRenderingPlugin: function () {
-
-			
-			
+            // subscribe on POD events
+            this.subscribe("PodSelectionChangeEvent", this.onPodSelectionChangeEvent, this);
+            this.subscribe("OperationListSelectEvent", this.onOperationChangeEvent, this);
+            this.subscribe("WorklistSelectEvent", this.onWorkListSelectEvent, this);	
 		},
+
+        onBeforeRendering: function () {
+            // this.loadModel();
+        },
+
+        onPodSelectionChangeEvent: function (sChannelId, sEventId, oData) {
+            // don't process if same object firing event
+            if (this.isEventFiredByThisPlugin(oData)) {
+                return;
+            }
+
+            // this.loadModel();
+        },
+
+        onOperationChangeEvent: function (sChannelId, sEventId, oData) {
+            // don't process if same object firing event
+            if (this.isEventFiredByThisPlugin(oData)) {
+                return;
+            }
+
+            // this.loadModel();
+        },
+        
+        onWorkListSelectEvent: function (sChannelId, sEventId, oData) {
+            // don't process if same object firing event
+            if (this.isEventFiredByThisPlugin(oData)) {
+                return;
+            }
+
+            // this.loadModel();
+        },        
 
         isSubscribingToNotifications: function() {
             
@@ -64,22 +87,22 @@ sap.ui.define([
                             
                             break;
                         case "template2":
-                            
                         
                         }        
           
-
-                    
                 }
             }
 
         },
         
 
-		onExit: function () {
-			PluginViewController.prototype.onExit.apply(this, arguments);
-
-
-		}
+        onExit: function () {
+            if (PluginViewController.prototype.onExit) {
+            PluginViewController.prototype.onExit.apply(this, arguments);
+                }
+            this.unsubscribe("PodSelectionChangeEvent", this.onPodSelectionChangeEvent, this);
+            this.unsubscribe("OperationListSelectEvent", this.onOperationChangeEvent, this);
+            this.unsubscribe("WorklistSelectEvent", this.onWorkListSelectEvent, this);
+        }
 	});
 });

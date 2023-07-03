@@ -7,10 +7,8 @@ sap.ui.define([
     var oFormContainer;
 
     return PropertyEditor.extend( "sap.custom.plugin.testplugin.sfcdetails.sfcdetails.builder.PropertyEditor" ,{
-
 		constructor: function(sId, mSettings){
 			PropertyEditor.apply(this, arguments);
-			
 			this.setI18nKeyPrefix("customComponentListConfig.");
 			this.setResourceBundleName("sap.custom.plugin.testplugin.sfcdetails.sfcdetails.i18n.builder");
 			this.setPluginResourceBundleName("sap.custom.plugin.testplugin.sfcdetails.sfcdetails.i18n.i18n");
@@ -18,10 +16,8 @@ sap.ui.define([
 		
 		addPropertyEditorContent: function(oPropertyFormContainer){
 			var oData = this.getPropertyData();
-			
 			this.addSwitch(oPropertyFormContainer, "backButtonVisible", oData);
-			this.addSwitch(oPropertyFormContainer, "closeButtonVisible", oData);
-						
+			this.addSwitch(oPropertyFormContainer, "closeButtonVisible", oData);			
 			this.addInputField(oPropertyFormContainer, "title", oData);
 			this.addInputField(oPropertyFormContainer, "text", oData);
 			
