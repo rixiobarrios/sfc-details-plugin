@@ -13,8 +13,10 @@ sap.ui.define([
         onAfterRendering: function(){
             this.getView().byId("backButton").setVisible(this.getConfiguration().backButtonVisible);
             this.getView().byId("closeButton").setVisible(this.getConfiguration().closeButtonVisible);
+
             this.getView().byId("headerTitle").setText(this.getConfiguration().title);
-            this.getView().byId("textPlugin").setText(this.getConfiguration().text);
+            // delete line since id no longer exist
+            // this.getView().byId("textPlugin").setText(this.getConfiguration().text);
         },
 
 		onBeforeRenderingPlugin: function () {
@@ -24,26 +26,26 @@ sap.ui.define([
             this.subscribe("WorklistSelectEvent", this.onWorkListSelectEvent, this);	
 		},
 
-        onBeforeRendering: function () {
-            // this.loadModel();
-        },
+        onBeforeRendering: function () {},
 
         onPodSelectionChangeEvent: function (sChannelId, sEventId, oData) {
             // don't process if same object firing event
             if (this.isEventFiredByThisPlugin(oData)) {
                 return;
             }
-
-            // this.loadModel();
         },
 
         onOperationChangeEvent: function (sChannelId, sEventId, oData) {
             // don't process if same object firing event
-            if (this.isEventFiredByThisPlugin(oData)) {
+            if (oData.selections[0].sfc !== "") {
+                console.log(oData.selections[0].sfc)
+
+                // target object and render by Id    
+                this.getView().byId("order").setText("Order: " + oData.selections[0].sfc);
+                this.getView().byId("material").setText("Material: " + oData.selections[0].material);
+
                 return;
             }
-
-            // this.loadModel();
         },
         
         onWorkListSelectEvent: function (sChannelId, sEventId, oData) {
@@ -52,7 +54,6 @@ sap.ui.define([
                 return;
             }
 
-            // this.loadModel();
         },        
 
         isSubscribingToNotifications: function() {

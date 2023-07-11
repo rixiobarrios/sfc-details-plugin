@@ -29,12 +29,18 @@
             </Toolbar>
         </headerToolbar>
         <content>
-            <Text id="order" text="Order:" class="textFontSize" textAlign="Initial" width="100%"/>
+            <VBox id="podModelPluginPanelContent" width="100%" height="100%">
+                <HBox width="100%">
+                    <items>        
+                        <Text id="order" text="Order:" class="textFontSize" textAlign="Initial" width="100%"/>
+                    </items>
+                </HBox>                  
             <Text id="sfc" text="SFC:" class="textFontSize" textAlign="Initial" width="100%"/>
             <Text id="material" text="Material:" class="textFontSize" textAlign="Initial" width="100%"/>
             <Text id="bom" text="BOM:" class="textFontSize" textAlign="Initial" width="100%"/>
             <Text id="routing" text="Routing:" class="textFontSize" textAlign="Initial" width="100%"/>
             <Text id="status" text="Status:" class="textFontSize" textAlign="Initial" width="100%"/>
+            </VBox>
         </content>
 	    </Panel>		
 </mvc:View>
