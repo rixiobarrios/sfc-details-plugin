@@ -38,11 +38,20 @@ sap.ui.define([
         onOperationChangeEvent: function (sChannelId, sEventId, oData) {
             // don't process if same object firing event
             if (oData.selections[0].sfc !== "") {
-                console.log(oData.selections[0].sfc)
+                console.log(this.getPodSelectionModel().getSelection().shopOrder.shopOrder);
+                console.log(oData.selections[0].sfc);
+                console.log(oData.selections[0].material);
+                // console.log(oData.operations[0].bom);
+                console.log(oData.selections[0].routing);
+                console.log(oData.selections[0].statusDescription);
 
-                // target object and render by Id    
-                this.getView().byId("order").setText("Order: " + oData.selections[0].sfc);
+                // target object and render by Id
+                this.getView().byId("order").setText("Order: " + this.getPodSelectionModel().getSelection().shopOrder.shopOrder);   
+                this.getView().byId("sfc").setText("SFC: " + oData.selections[0].sfc);
                 this.getView().byId("material").setText("Material: " + oData.selections[0].material);
+                // this.getView().byId("bom").setText("BOM: " + oData.operations[0].bom);
+                this.getView().byId("routing").setText("Routing: " + oData.selections[0].routing);
+                this.getView().byId("status").setText("Status: " + oData.selections[0].statusDescription);
 
                 return;
             }
