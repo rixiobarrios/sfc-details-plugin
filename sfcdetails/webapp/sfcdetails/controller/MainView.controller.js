@@ -13,10 +13,7 @@ sap.ui.define([
         onAfterRendering: function(){
             this.getView().byId("backButton").setVisible(this.getConfiguration().backButtonVisible);
             this.getView().byId("closeButton").setVisible(this.getConfiguration().closeButtonVisible);
-
             this.getView().byId("headerTitle").setText(this.getConfiguration().title);
-            // delete line since id no longer exist
-            // this.getView().byId("textPlugin").setText(this.getConfiguration().text);
         },
 
 		onBeforeRenderingPlugin: function () {
@@ -34,10 +31,42 @@ sap.ui.define([
                 return;
             }
         },
+        // API call to render Bill Of Material(BOM)
+        updateOrderInfo: function(oEvent){
+            if(this.getPodSelectionModel().getSelection() == null){
+                return;
+            }
+            var shopOrder = this.getPodSelectionModel().getSelection().getShopOrder();
+            if (shopOrder != null){
+                this.getView().byId("SHOPORDER").setValue(shopOrder.shopOrder); // change SHOPORDER
+
+                var url = this._oPodController.getPublicApiRestDataSourceUri() +'/order/v1/orders?order=' + shopOrder.shopOrder + '&plant=' + plant;
+                var that = this;
+                this._oPodController.ajaxGetRequest(url, null,
+                    function (oResponseData) {
+                        if (oResponseData["customValues"] != null){
+                            var values = oResponseData["customValues"];
+                            that.getView().byId("SALESORDER").setValue(''); // change SALESORDER
+                            for (var i = 0 ; i < values.length; i++){
+                                if(values[i]["attribute"] == that.getConfiguration().SalesOrderField){
+                                    that.getView().byId("SALESORDER").setValue(values[i]["value"]); // change SALERORDER
+                                    break;
+                                }
+                            }
+                        }                   
+                    
+                },
+                function (oError, sHttpErrorMessage) {
+                    var err = oError || sHttpErrorMessage;
+                }
+                );
+            }
+        },
 
         onOperationChangeEvent: function (sChannelId, sEventId, oData) {
             // don't process if same object firing event
             if (oData.selections[0].sfc !== "") {
+                // log values to test output
                 console.log(this.getPodSelectionModel().getSelection().shopOrder.shopOrder);
                 console.log(oData.selections[0].sfc);
                 console.log(oData.selections[0].material);
@@ -45,7 +74,7 @@ sap.ui.define([
                 console.log(oData.selections[0].routing);
                 console.log(oData.selections[0].statusDescription);
 
-                // target object and render by Id
+                // target object and render by Id on XML file
                 this.getView().byId("order").setText("Order: " + this.getPodSelectionModel().getSelection().shopOrder.shopOrder);   
                 this.getView().byId("sfc").setText("SFC: " + oData.selections[0].sfc);
                 this.getView().byId("material").setText("Material: " + oData.selections[0].material);
