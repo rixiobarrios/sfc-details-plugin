@@ -68,13 +68,12 @@ Yes
 No
 
 - Step 23 - Open working folder  
-e.g. user/projects/test9podplugin
+e.g. user/projects/test9podplugin  
 
 - Step 24 - Open file builder.properties  
-e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/builder/PropertyEditor.js
+e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/builder/PropertyEditor.js  
 
 - Step 25 - Change line code block from line 36 ```"title":"sfcdetail"``` and line 37 ```"text":"sfcdetail"``` to  
-
 ```	
 	getDefaultPropertyData: function(){
 			return {
@@ -87,4 +86,96 @@ e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/builder/PropertyEdi
 	    }
 ```
 
-- Step 26 - Edit the MainView.view.xml file
+- Step 26 - Edit the MainView.view.xml file to target elements by Id   
+```  
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sap.custom.plugin.testplugin.sfcdetails.sfcdetails.controller.MainView" width="100%" height="100%">
+		
+        <Panel 
+                id="panelPlugin"  
+                width="100%"
+                height="100%"
+                expandable="false"
+                expanded="false"
+                accessibleRole="Region"
+                backgroundDesign="Transparent"
+                class="sapUiNoContentPadding">  
+        <headerToolbar>
+            <Toolbar height="3rem">
+                <Button
+                    id="backButton"
+                    visible="false"
+                    text="{i18n>template.back.btn}"
+                    tooltip="{i18n>template.back.tooltip}"
+                    icon="sap-icon://nav-back"
+                    press="onBackPress"/>
+                <Title id="headerTitle" text=""/>
+                <ToolbarSpacer/>
+                <Button
+                    id="closeButton"
+                    visible="false"
+                    tooltip="{i18n>template.close.tooltip}"
+                    icon="sap-icon://decline"
+                    press="onClosePress"/>
+            </Toolbar>
+        </headerToolbar>
+        <content>
+            <VBox id="podModelPluginPanelContent" width="100%" height="100%">
+				<Text id="order" text="Order:" class="textFontSize" textAlign="Initial" width="100%"/>
+				<Text id="sfc" text="SFC:" class="textFontSize" textAlign="Initial" width="100%"/>
+				<Text id="material" text="Material:" class="textFontSize" textAlign="Initial" width="100%"/>
+				<Text id="bom" text="BOM:" class="textFontSize" textAlign="Initial" width="100%"/>
+				<Text id="routing" text="Routing:" class="textFontSize" textAlign="Initial" width="100%"/>
+				<Text id="status" text="Status:" class="textFontSize" textAlign="Initial" width="100%"/>
+            </VBox>
+        </content>
+	    </Panel>		
+</mvc:View>
+```  
+
+- Step 27 - Log target data to render  
+```
+        onOperationChangeEvent: function (sChannelId, sEventId, oData) {
+            // don't process if same object firing event
+            if (oData.selections[0].sfc !== "") {
+                // log values to test output
+                console.log(this.getPodSelectionModel().getSelection().shopOrder.shopOrder);
+                console.log(oData.selections[0].sfc);
+                console.log(oData.selections[0].material);
+                // log BOM here in next step through API call
+                console.log(oData.selections[0].routing);
+                console.log(oData.selections[0].statusDescription);
+
+                return;
+            }
+        },
+```
+
+- Step 28 - Make API call to target BOM (Bill Of Material) data  
+```  
+        // API call to render Bill Of Material(BOM)
+        getBom: function () {
+            var plant = this.getPodController().getUserPlant();
+
+            var shopOrder = this.getPodSelectionModel().getSelection().getShopOrder();
+            if (shopOrder != null) {
+
+                var url = this.getPublicApiRestDataSourceUri() + '/order/v1/orders?order=' + shopOrder.shopOrder + '&plant=' + plant;
+                var that = this;
+                this.ajaxGetRequest(url, null,
+                    function (oResponseData) {
+						// render response from API to the bom Id on the xml view file
+                        that.getView().byId("bom").setText("BOM:"+ oResponseData.bom.bom);
+						// log target data to render
+                        console.log(oResponseData.bom.bom);
+                    },
+                    function (oError, sHttpErrorMessage) {
+                        var err = oError || sHttpErrorMessage;
+                    }
+                );
+            }
+        },
+```  
+
+- Step 29 - Build ```mta.yaml``` file  
+
+- Step 30 - Deploy ```sfcdetails_0.0.1.mtar``` file
