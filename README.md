@@ -1,6 +1,6 @@
 # DMC UX UI5 BAS UC
 
-## UX Use-Case-02: View Plug-in – Display SFC Details (1W)
+## UX Use-Case-02: View Plug-in – Display SFC Details
 As a system, I want a custom view plugin that displays specific SFC data for the currently selected SFC Value so that I have the SFC details displayed on the screen.
 
 - Step 1 - Go to Business Application Studio (BAS)
@@ -86,7 +86,8 @@ e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/builder/PropertyEdi
 	    }
 ```
 
-- Step 26 - Edit the MainView.view.xml file to target elements by Id   
+- Step 26 - Edit the MainView.view.xml file to target elements by Id in view  
+e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/view/MainView.view.xml  
 ```  
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sap.custom.plugin.testplugin.sfcdetails.sfcdetails.controller.MainView" width="100%" height="100%">
 		
@@ -132,7 +133,8 @@ e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/builder/PropertyEdi
 </mvc:View>
 ```  
 
-- Step 27 - Log target data to render  
+- Step 27 - Log target data to render in controller  
+e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/controller/MainView.controller.js  
 ```
         onOperationChangeEvent: function (sChannelId, sEventId, oData) {
             // don't process if same object firing event
@@ -151,6 +153,7 @@ e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/builder/PropertyEdi
 ```
 
 - Step 28 - Make API call to target BOM (Bill Of Material) data  
+e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/controller/MainView.controller.js 
 ```  
         // API call to render Bill Of Material(BOM)
         getBom: function () {
@@ -176,6 +179,26 @@ e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/builder/PropertyEdi
         },
 ```  
 
-- Step 29 - Build ```mta.yaml``` file  
+- Step 29 - Pass target data from the controller to the view  
+e.g. user/projects/test9podplugin/sfcdetail/webapp/sfcdetail/controller/MainView.controller.js  
+``` 
+onOperationChangeEvent: function (sChannelId, sEventId, oData) {
+    // don't process if same object firing event
+    if (oData.selections[0].sfc !== "") {
 
-- Step 30 - Deploy ```sfcdetails_0.0.1.mtar``` file
+        // target object and render by Id on XML file
+        this.getView().byId("order").setText("Order: " + this.getPodSelectionModel().getSelection().shopOrder.shopOrder);   
+        this.getView().byId("sfc").setText("SFC: " + oData.selections[0].sfc);
+        this.getView().byId("material").setText("Material: " + oData.selections[0].material);
+        // render BOM here through API call
+        this.getView().byId("routing").setText("Routing: " + oData.selections[0].routing);
+        this.getView().byId("status").setText("Status: " + oData.selections[0].statusDescription);
+
+        return;
+    }
+}, 
+```
+
+- Step 30 - Build ```mta.yaml``` file  
+
+- Step 31 - Deploy ```sfcdetails_0.0.1.mtar``` file
