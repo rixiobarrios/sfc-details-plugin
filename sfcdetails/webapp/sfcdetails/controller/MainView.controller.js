@@ -32,33 +32,21 @@ sap.ui.define([
             }
         },
         // API call to render Bill Of Material(BOM)
-        updateOrderInfo: function(oEvent){
-            if(this.getPodSelectionModel().getSelection() == null){
-                return;
-            }
-            var shopOrder = this.getPodSelectionModel().getSelection().getShopOrder();
-            if (shopOrder != null){
-                this.getView().byId("SHOPORDER").setValue(shopOrder.shopOrder); // change SHOPORDER
+        getBom: function () {
+            var plant = this.getPodController().getUserPlant();
 
-                var url = this._oPodController.getPublicApiRestDataSourceUri() +'/order/v1/orders?order=' + shopOrder.shopOrder + '&plant=' + plant;
+            var shopOrder = this.getPodSelectionModel().getSelection().getShopOrder();
+            if (shopOrder != null) {
+
+                var url = this.getPublicApiRestDataSourceUri() + '/order/v1/orders?order=' + shopOrder.shopOrder + '&plant=' + plant;
                 var that = this;
-                this._oPodController.ajaxGetRequest(url, null,
+                this.ajaxGetRequest(url, null,
                     function (oResponseData) {
-                        if (oResponseData["customValues"] != null){
-                            var values = oResponseData["customValues"];
-                            that.getView().byId("SALESORDER").setValue(''); // change SALESORDER
-                            for (var i = 0 ; i < values.length; i++){
-                                if(values[i]["attribute"] == that.getConfiguration().SalesOrderField){
-                                    that.getView().byId("SALESORDER").setValue(values[i]["value"]); // change SALERORDER
-                                    break;
-                                }
-                            }
-                        }                   
-                    
-                },
-                function (oError, sHttpErrorMessage) {
-                    var err = oError || sHttpErrorMessage;
-                }
+                        that.getView().byId("bom").setText("BOM:"+ oResponseData.bom.bom);
+                    },
+                    function (oError, sHttpErrorMessage) {
+                        var err = oError || sHttpErrorMessage;
+                    }
                 );
             }
         },
@@ -70,7 +58,7 @@ sap.ui.define([
                 console.log(this.getPodSelectionModel().getSelection().shopOrder.shopOrder);
                 console.log(oData.selections[0].sfc);
                 console.log(oData.selections[0].material);
-                // console.log(oData.operations[0].bom);
+                console.log(this.getBom());
                 console.log(oData.selections[0].routing);
                 console.log(oData.selections[0].statusDescription);
 
@@ -78,7 +66,7 @@ sap.ui.define([
                 this.getView().byId("order").setText("Order: " + this.getPodSelectionModel().getSelection().shopOrder.shopOrder);   
                 this.getView().byId("sfc").setText("SFC: " + oData.selections[0].sfc);
                 this.getView().byId("material").setText("Material: " + oData.selections[0].material);
-                // this.getView().byId("bom").setText("BOM: " + oData.operations[0].bom);
+                this.getView().byId("bom").setText("BOM: " + this.getBom());
                 this.getView().byId("routing").setText("Routing: " + oData.selections[0].routing);
                 this.getView().byId("status").setText("Status: " + oData.selections[0].statusDescription);
 
