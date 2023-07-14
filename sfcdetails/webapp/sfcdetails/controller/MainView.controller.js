@@ -43,6 +43,7 @@ sap.ui.define([
                 this.ajaxGetRequest(url, null,
                     function (oResponseData) {
                         that.getView().byId("bom").setText("BOM:"+ oResponseData.bom.bom);
+                        console.log(oResponseData.bom.bom);
                     },
                     function (oError, sHttpErrorMessage) {
                         var err = oError || sHttpErrorMessage;
@@ -58,7 +59,7 @@ sap.ui.define([
                 console.log(this.getPodSelectionModel().getSelection().shopOrder.shopOrder);
                 console.log(oData.selections[0].sfc);
                 console.log(oData.selections[0].material);
-                console.log(this.getBom());
+                this.getBom();
                 console.log(oData.selections[0].routing);
                 console.log(oData.selections[0].statusDescription);
 
@@ -66,7 +67,7 @@ sap.ui.define([
                 this.getView().byId("order").setText("Order: " + this.getPodSelectionModel().getSelection().shopOrder.shopOrder);   
                 this.getView().byId("sfc").setText("SFC: " + oData.selections[0].sfc);
                 this.getView().byId("material").setText("Material: " + oData.selections[0].material);
-                this.getView().byId("bom").setText("BOM: " + this.getBom());
+                // this.getView().byId("bom").setText("BOM: " + this.getBom());
                 this.getView().byId("routing").setText("Routing: " + oData.selections[0].routing);
                 this.getView().byId("status").setText("Status: " + oData.selections[0].statusDescription);
 
