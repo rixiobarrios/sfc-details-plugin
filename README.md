@@ -44,7 +44,7 @@ e.g. 0.0.1
 e.g. dmc-az-cons-training.test.execution.eu20.dmc.cloud.sap
 
 - Step 15 - What is your plugin namespace?  
-e.g. sap.custom.plugin.testplugin
+e.g. sap.custom.plugin.testplugin.sfcdetails
 
 - Step 16 - Support WORK_CENTER PODS?  
 Yes
